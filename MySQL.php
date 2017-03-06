@@ -58,14 +58,9 @@
 		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prix` FROM `consommation`');
 		$stmt -> execute();
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-			if($i == 0)
-			{
-				$consom = array($i => $row->Nom);
-			}
-			else
-			{
-				$consom = array(","$i => $row->Nom);
-			}
+			$consom[$i][0] = $row->ID;
+			$consom[$i][1] = $row->Nom;
+			$consom[$i][2] = $row->Prix;
 			$i++;
 		}
 		if(!empty($consom))
