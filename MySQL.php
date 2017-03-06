@@ -48,4 +48,34 @@
 		}
 	}
 
+	function consommation($consom)
+	{
+
+		$cnn = getConnexion('tpi-fictif');
+		$i = 0;
+		//Permet de savoir plus facilement si login correct ou pas
+
+		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prix` FROM `consommation`');
+		$stmt -> execute();
+		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+			if($i == 0)
+			{
+				$consom = array($i => $row->Nom);
+			}
+			else
+			{
+				$consom = array(","$i => $row->Nom);
+			}
+			$i++;
+		}
+		if(!empty($consom))
+		{
+			return $consom;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 ?>
