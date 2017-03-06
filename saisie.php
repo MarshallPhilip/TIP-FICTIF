@@ -4,6 +4,7 @@
   $consom = "";
   $prix = 0;
 var_dump($_POST);
+echo $_POST['12'];
   //Les chiffres sont plus rapides pour identifier
   if(isset($_POST['0'])){
 
@@ -27,8 +28,7 @@ var_dump($_POST);
             {
 
               foreach ($listeConsom as $key => $choix) {
-                echo"$choix[$key].$choix[1].<br/><br/><br/><br/><br/><br/><br/><br/><br/>";
-                //echo '<input type="checkbox" name="'.$choix[$key][0]." value=".'$choix.">'.$choix[$key][0].$choix[$key][1].'</input>';
+                echo $choix[1].' <input type="number" name="'.$choix[0].'"  min="0">';
                 if($choix[0]%4 == 0 ){
                   echo '<br/>';
                 }
