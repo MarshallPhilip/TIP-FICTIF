@@ -7,12 +7,10 @@
   <form method="POST" action=".php">
     <input type="submit" name="saisir" value="Saisir"/>
     <input type="submit" name="Factures" value="Factures"/>
-    <input type="submit" name="Users" value="Gérer les utilisateurs"/>
-    <p>
-      <?php if ($error == 1)
-      {
-      echo "Numéro de badge erroné";
-      } ?>
-  </p>
+    <?php if ($statut == "sup")
+    {
+      echo '<input type="submit" name="Users" value="Gérer les utilisateurs"/>';
+    } ?>
+
   </form>
 </html>
