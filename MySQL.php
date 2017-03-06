@@ -25,7 +25,7 @@
 	{
 		$cnn = getConnexion('tpi-fictif');
 		//Permet de savoir plus facilement si login correct ou pas
-		$stmt = $cnn -> prepare('SELECT `Nom`, `Prenom`, `Badge` FROM `user` WHERE `Badge` LIKE :badge');
+		$stmt = $cnn -> prepare('SELECT `Nom`, `Prenom`, `Badge`, `Statut` FROM `user` WHERE `Badge` LIKE :badge');
 		$stmt -> bindValue(':badge', $badge, PDO::PARAM_STR);
 		$stmt -> execute();
 
@@ -37,7 +37,8 @@
 			//Mise en tableau pour retourner plusieurs param en un
 			$login = array('Nom' => $row->Nom,
 									'Prenom' => $row->Prenom,
-										'Badge' => $row->Badge);
+										'Badge' => $row->Badge,
+										'Statut' => $row->Statut);
 			return $login;
 		}
 		else
