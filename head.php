@@ -1,7 +1,14 @@
 <?php
-  include("MySQL.php");
+  session_start();
+  require_once("MySQL.php");
+  require_once("login.php")
  ?>
-<!DOCTYPE HTML>
+
+<!DOCTYPE html>
 <html>
+  <head>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-</html>
+    <meta charset="utf-8">
+    <title>tpi-fictif</title>
+  </head>
+  <body>

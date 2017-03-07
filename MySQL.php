@@ -25,7 +25,7 @@
 	{
 		$cnn = getConnexion('tpi-fictif');
 		//Permet de savoir plus facilement si login correct ou pas
-		$stmt = $cnn -> prepare('SELECT `Nom`, `Prenom`, `Badge`, `Statut` FROM `user` WHERE `Badge` LIKE :badge');
+		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prenom`, `Badge`, `Statut` FROM `user` WHERE `Badge` LIKE :badge');
 		$stmt -> bindValue(':badge', $badge, PDO::PARAM_STR);
 		$stmt -> execute();
 
@@ -35,10 +35,11 @@
 		if(!empty($row))
 		{
 			//Mise en tableau pour retourner plusieurs param en un
-			$login = array('Nom' => $row->Nom,
-									'Prenom' => $row->Prenom,
-										'Badge' => $row->Badge,
-										'Statut' => $row->Statut);
+			$login = array('ID' => $row->ID,
+										'Nom' => $row->Nom,
+									'Prenom'=> $row->Prenom,
+									'Badge' => $row->Badge,
+							   'Statut' => $row->Statut);
 			return $login;
 		}
 		else
@@ -48,13 +49,13 @@
 		}
 	}
 	//Retourne la liste des articles de consommation
-	function Listeconsommation($consom)
+	function Listeconsommation()
 	{
 
 		$cnn = getConnexion('tpi-fictif');
 		$i = 0;
 		//Permet de savoir plus facilement si login correct ou pas
-
+		$consom = [];
 		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prix` FROM `consommation`');
 		$stmt -> execute();
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -76,12 +77,24 @@
 	function Saisieconsommation($saisie)
 	{
 		$cnn = getConnexion('tpi-fictif');
-		$Debutsql = "INSERT INTO `consomme` (`User_ID`, `Consommation_ID`, `DateConsommation`, `Nombre`, `PrixVendu`) VALUES";
-		
+		$debutSQL = "INSERT INTO `consomme` (`User_ID`, `Consommation_ID`, `DateConsommation`, `Nombre`) VALUES";
+		$values = "";
+		$i = 0;
 		//Ecriture des values avec foreach
 		foreach ($saisie as $key => $value) {
+			if($i == 0){
+				$values .= "(".$_SESSION['user'][1].", ".$saisie[$key][0].", ".date('d/m/Y').", ".$saisie[$key][1].")";
+				$i = 1;
+			}
+			else{
+				$values .= ", (".$_SESSION['user'][1].", ".$saisie[$key][0].", ".date('d/m/Y').", ".$saisie[$key][1].")";
+			}
+
 
 		}
+		$req = $debutSQL.$values.";";
+		$stmt = $cnn -> prepare($req);
+		$stmt -> execute();
 	}
 
 

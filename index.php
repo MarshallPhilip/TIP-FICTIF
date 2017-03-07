@@ -1,5 +1,5 @@
 <?php
-    include("head.php");
+    require_once("head.php");
     $error = 0;
 
     if(isset($_GET['error']))
@@ -9,8 +9,7 @@
 ?>
 
 
-<!DOCTYPE html>
-<html>
+
   <form method="POST" action="login.php" id="login">
     <input type="password" name='badge' placeholder="Badge"/>
     <input type="submit" name="valider" value="Valider"/>
@@ -21,5 +20,4 @@
       } ?>
   </p>
   </form>
-
-</html>
+<?php require_once("footer.php"); ?>

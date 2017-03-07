@@ -1,5 +1,5 @@
 <?php
-  include("head.php");
+  require_once("head.php");
   $statut = $_GET['statut'];
 ?>
 <!DOCTYPE HTML>
