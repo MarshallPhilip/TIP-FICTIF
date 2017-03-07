@@ -1,13 +1,12 @@
 <?php
+  session_start();
   include("head.php");
   $statut = $_GET['statut'];
-  $consom = "";
   //tr pour le tableau permet de retourner à la ligne après 4 art. de consom.
   $tr = false;
   //S'incrémente à chaque nouvelle saisie dans tableau consom. rempli avec var POST
   $i = 1;
   var_dump($_POST);
-echo $_POST['12'];
   //Les chiffres sont plus rapides pour identifier
   if(isset($_POST['valide'])){
     foreach ($_POST as $key => $value) {
@@ -24,7 +23,20 @@ echo $_POST['12'];
       }
     }
 
-    var_dump($concatConsom);
+
+    // DEBUT
+    $conso = array_filter($_POST, function($v, $k){
+      return !empty($v) && is_numeric($v);
+    }, ARRAY_FILTER_USE_BOTH);
+
+    foreach ($conso as $key => $value) {
+      $concatConso[$i][0] = $key;
+      $concatConso[$i][1] = date("d/m/Y");
+      $concatConso[$i][2] = $value;
+
+    }
+    var_dump($concatConso);
+    Saisieconsommation($conso);
   }
 
 ?>
@@ -42,7 +54,7 @@ echo $_POST['12'];
            <legend>Liste des consommations</legend>
            <table>
            <?php
-            $listeConsom = Listeconsommation($consom);
+            $listeConsom = Listeconsommation($conso);
             if($listeConsom != false)
             {
 

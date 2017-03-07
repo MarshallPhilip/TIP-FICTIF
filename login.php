@@ -6,7 +6,7 @@
 	$connexion = login($badge);
 
 	if($connexion != false){
-		$_SESSION['login'] = $connexion['Prenom']." ".$connexion['Nom'];
+		$_SESSION['user'] = $connexion['Prenom']." ".$connexion['Nom'];
 		$statut = $connexion['Statut'];
 
 		if($statut == "emp")

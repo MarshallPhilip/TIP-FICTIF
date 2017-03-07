@@ -73,5 +73,16 @@
 		}
 	}
 
+	function Saisieconsommation($saisie)
+	{
+		$cnn = getConnexion('tpi-fictif');
+		$Debutsql = "INSERT INTO `consomme` (`User_ID`, `Consommation_ID`, `DateConsommation`, `Nombre`, `PrixVendu`) VALUES";
+		
+		//Ecriture des values avec foreach
+		foreach ($saisie as $key => $value) {
+
+		}
+	}
+
 
 ?>
