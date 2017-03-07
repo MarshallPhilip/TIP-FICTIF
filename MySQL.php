@@ -47,8 +47,8 @@
 			return false;
 		}
 	}
-
-	function consommation($consom)
+	//Retourne la liste des articles de consommation
+	function Listeconsommation($consom)
 	{
 
 		$cnn = getConnexion('tpi-fictif');
@@ -72,5 +72,6 @@
 			return false;
 		}
 	}
+
 
 ?>
