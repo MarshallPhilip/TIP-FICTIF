@@ -1,5 +1,5 @@
 <?php
-	require_once("head.php");
+	require_once("../head.php");
 	$badge = $_POST['badge'];
 	$connexion = login($badge);
 
@@ -10,10 +10,10 @@
 
 		if($statut == "emp")
 		{
-			header("Location: saisie.php?statut=$statut");
+			header("Location: ../standard/IndexStandard.php?statut=$statut");
 		}
 		else {
-			header("Location: indexAdmin.php?statut=$statut");
+			header("Location: ../admin/indexAdmin.php?statut=$statut");
 		}
 	}
 	else

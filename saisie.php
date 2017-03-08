@@ -1,6 +1,13 @@
 <?php
   require_once("head.php");
   $statut = $_GET['statut'];
+  //Permet de rediriger sur le bon index en fonction de qui est logué
+  if($statut == "emp"){
+    $retour = "standard/indexStandard.php?statut=emp";
+  }
+  else{
+    $retour = "admin/indexAdmin.php?statut=".$statut;
+  }
   //tr pour le tableau permet de retourner à la ligne après 4 art. de consom.
   $tr = false;
   //S'incrémente à chaque nouvelle saisie dans tableau consom. rempli avec var POST
@@ -63,6 +70,12 @@
        </table>
        </fieldset>
     </div>
-    <input type="submit" name="valider" value="Valider"/>
+    <table>
+      <tr>
+        <td><input type="submit" name="valider" value="Valider"/></td>
+        <td><a href="<?php echo $retour;?>">Retour</a></td>
+      </tr>
+    </table>
+
   </form>
 <?php require_once("footer.php"); ?>

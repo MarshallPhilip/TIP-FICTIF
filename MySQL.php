@@ -103,5 +103,32 @@
 		$stmt -> execute();
 	}
 
+	//Extrait les achats d'une personne
+	function mesAchats(){
+		$cnn = getConnexion('tpi-fictif');
+
+		$i = 0;
+		//Permet de savoir plus facilement si login correct ou pas
+		$consom = [];
+		$stmt = $cnn -> prepare('SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme`INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID`');
+		$stmt -> execute();
+		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
+		//Passage en param plus facile
+		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+			$consom[$i][0] = $row->ID;
+			$consom[$i][1] = $row->Nom;
+			$consom[$i][2] = $row->Prix;
+			$i++;
+		}
+		if(!empty($consom))
+		{
+			return $consom;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 
 ?>
