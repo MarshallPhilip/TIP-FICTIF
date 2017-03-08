@@ -2,8 +2,7 @@
   require_once("head.php");
   $statut = $_GET['statut'];
 ?>
-<!DOCTYPE HTML>
-<html>
+
   <form method="POST" action=".php">
     <input type="submit" name="saisir" value="Saisir"/>
     <input type="submit" name="Factures" value="Factures"/>
@@ -13,4 +12,4 @@
     } ?>
 
   </form>
-</html>
+<?php require_once("footer.php"), ?>

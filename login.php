@@ -1,4 +1,5 @@
 <?php
+	require_once("head.php");
 	$badge = $_POST['badge'];
 	$connexion = login($badge);
 

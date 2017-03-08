@@ -58,6 +58,8 @@
 		$consom = [];
 		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prix` FROM `consommation`');
 		$stmt -> execute();
+		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
+		//Passage en param plus facile
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
 			$consom[$i][0] = $row->ID;
 			$consom[$i][1] = $row->Nom;
@@ -77,21 +79,25 @@
 	function Saisieconsommation($saisie)
 	{
 		$cnn = getConnexion('tpi-fictif');
+		//Préparation requête
 		$debutSQL = "INSERT INTO `consomme` (`User_ID`, `Consommation_ID`, `DateConsommation`, `Nombre`) VALUES";
 		$values = "";
 		$i = 0;
 		//Ecriture des values avec foreach
 		foreach ($saisie as $key => $value) {
+			//Premier passage sans virgule (nouvelle ligne)
 			if($i == 0){
-				$values .= "(".$_SESSION['user'][1].", ".$saisie[$key][0].", ".date('d/m/Y').", ".$saisie[$key][1].")";
+				$values .= "(".$_SESSION['user'][1].", ".$saisie[$key][0].", '".date('d/m/Y')."', ".$saisie[$key][1].")";
 				$i = 1;
 			}
 			else{
-				$values .= ", (".$_SESSION['user'][1].", ".$saisie[$key][0].", ".date('d/m/Y').", ".$saisie[$key][1].")";
+				//on met une "," des la 2e ligne pour ne pas devoir l'enlever à la fin
+				$values .= ", (".$_SESSION['user'][1].", ".$saisie[$key][0].", '".date('d/m/Y')."', ".$saisie[$key][1].")";
 			}
 
 
 		}
+		//Concat du début de la req et de la fin passée dans le foreach
 		$req = $debutSQL.$values.";";
 		$stmt = $cnn -> prepare($req);
 		$stmt -> execute();
