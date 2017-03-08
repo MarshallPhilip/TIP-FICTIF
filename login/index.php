@@ -1,7 +1,6 @@
 <?php
     require_once("../head.php");
     $error = 0;
-
     if(isset($_GET['error']))
     {
       $error = $_GET['error'];

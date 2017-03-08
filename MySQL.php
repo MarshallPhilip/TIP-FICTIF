@@ -109,20 +109,23 @@
 
 		$i = 0;
 		//Permet de savoir plus facilement si login correct ou pas
-		$consom = [];
-		$stmt = $cnn -> prepare('SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme`INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID`');
+		$mesAchats = [];
+		$sql = 'SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme` INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` ='.$_SESSION['user'][1];
+		$stmt = $cnn -> prepare($sql);
 		$stmt -> execute();
 		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
 		//Passage en param plus facile
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$consom[$i][0] = $row->ID;
-			$consom[$i][1] = $row->Nom;
-			$consom[$i][2] = $row->Prix;
+			$mesAchats[$i][0] = $row->Nom;
+			$mesAchats[$i][1] = $row->DateConsommation;
+			$mesAchats[$i][2] = $row->Nombre;
+			$mesAchats[$i][3] = $row->PrixVendu;
+			$mesAchats[$i][4] = $row->Paye;
 			$i++;
 		}
-		if(!empty($consom))
+		if(!empty($mesAchats))
 		{
-			return $consom;
+			return $mesAchats;
 		}
 		else
 		{
