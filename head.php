@@ -14,10 +14,10 @@
     <title>TPI-FICTIF</title>
   </head>
   <header>
-    Connecté en tant que
+
     <?php
       if(isset($_SESSION['user'][0]))
-      echo  $_SESSION['user'][0]; 
+      echo 'Connecté en tant que '.$_SESSION['user'][0]; 
     ?>
     <?php
       if(isset($statut)){

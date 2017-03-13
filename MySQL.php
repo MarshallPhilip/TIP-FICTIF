@@ -48,6 +48,24 @@
 			return false;
 		}
 	}
+	//Retourne tous les utilisateurs existants dans la BD
+	function extractUsers()
+	{
+		$cnn = getConnexion('tpi-fictif');
+		$users = [];
+		$i = 0;
+		//Permet de savoir plus facilement si login correct ou pas
+		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prenom` FROM `user`');
+		$stmt -> execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+			$users[$i][0] = $row->ID;
+			$users[$i][1] = $row->Nom;
+			$users[$i][2] = $row->Prenom;
+			$i++;
+		}
+		return $users;
+	}
 	//Retourne la liste des articles de consommation
 	function Listeconsommation()
 	{
