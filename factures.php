@@ -1,5 +1,5 @@
 <?php
-  require_once("../head.php");
+  require_once("head.php");
   $statut = $_GET['statut'];
   $facture = [];
   $users = extractUsers();
@@ -9,30 +9,35 @@
   }
 
 ?>
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>">
-  <SELECT name="users">
-    <option value="choisir">Sélectionner utilisateur</option>
-    <?php
-      //Permet d'afficher la liste des utilisateurs que nous avons extraits dans MySQL.php
-      foreach ($users as $key => $user) {
-        //Recursivite
-        if(isset($_POST['users']) && $_POST['users'] == $user[0])
-        {
-          echo '<option value="'.$user[0].'" selected>'.$user[2].' '.$user[1].'</option>';
-        }else
-        {
-          echo '<option value="'.$user[0].'">'.$user[2].' '.$user[1].'</option>';
+<div class="container">
+  <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>">
+  <div class="form-group">
+    <SELECT name="users">
+      <option class="form-control" value="choisir">Sélectionner utilisateur</option>
+      <?php
+        //Permet d'afficher la liste des utilisateurs que nous avons extraits dans MySQL.php
+        foreach ($users as $key => $user) {
+          //Recursivite
+          if(isset($_POST['users']) && $_POST['users'] == $user[0])
+          {
+            echo '<option value="'.$user[0].'" selected>'.$user[2].' '.$user[1].'</option>';
+          }else
+          {
+            echo '<option value="'.$user[0].'">'.$user[2].' '.$user[1].'</option>';
+          }
+
         }
 
-      }
-
-      ?>
-  </SELECT>
-  <input type="submit" name="valider" value="Valider"/>
-</form>
+        ?>
+    </SELECT>
+    <input class="btn btn-primary" type="submit" name="valider" value="Valider"/>
+  </div>
+  </form>
+</div>
 <!-- Tableau affichant les consommation d'un user pour facture -->
-<div>
-  <table class="table-condensed">
+<div class="container">
+  <h2>Facture de XXX</h2>
+  <table class="table table table-striped">
   <?php
     //Affichage de la liste des articles de consommation
     //Uniquement si l'utilisateur a consommé qqch
@@ -59,7 +64,7 @@
           echo '</td>';
         }
 
-        echo '<td>modifier</td>';
+        echo '<td><a class="btn-link">modifier</a></td>';
         echo '</tr>';
 
 
@@ -68,7 +73,7 @@
 
    ?>
  </table>
- <a href="indexStandard.php?statut=<?php echo $statut;?>">Retour</a>
+ <a class="btn-link" href="indexAdmin.php?statut=<?php echo $statut; ?>">Retour</a>
 </div>
 
-<?php   require_once("../footer.php"); ?>
+<?php   require_once("footer.php"); ?>

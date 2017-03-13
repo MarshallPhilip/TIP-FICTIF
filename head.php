@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <meta charset="utf-8">
     <title>TPI-FICTIF</title>
   </head>
@@ -21,7 +21,7 @@
     ?>
     <?php
       if(isset($statut)){
-        echo '<form method="post" action="../login/login.php?statut='.$statut.'">';
+        echo '<form method="post" action="login.php?statut='.$statut.'">';
         echo '<input type=submit name="deconnect" value="Se déconnecter"/>';
         echo '</form>';
       }

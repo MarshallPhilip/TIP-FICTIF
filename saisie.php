@@ -3,10 +3,10 @@
   $statut = $_GET['statut'];
   //Permet de rediriger sur le bon index en fonction de qui est logué
   if($statut == "emp"){
-    $retour = "standard/indexStandard.php?statut=emp";
+    $retour = "indexStandard.php?statut=emp";
   }
   else{
-    $retour = "admin/indexAdmin.php?statut=".$statut;
+    $retour = "indexAdmin.php?statut=".$statut;
   }
   //tr pour le tableau permet de retourner à la ligne après 4 art. de consom.
   $tr = false;
@@ -34,6 +34,7 @@
   }
 
 ?>
+<div class="container">
 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>">
     <input type="hidden" name="valide"/>
     <h1>Saisir une consommation</h1>
@@ -41,7 +42,7 @@
     <div>
       <fieldset>
          <legend>Liste des consommations</legend>
-         <table>
+         <table class="table">
          <?php
          //Affichage de la liste des articles de consommation
           $listeConsom = Listeconsommation();
@@ -78,4 +79,5 @@
     </table>
 
   </form>
+</div>
 <?php require_once("footer.php"); ?>

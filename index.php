@@ -1,5 +1,5 @@
 <?php
-    require_once("../head.php");
+    require_once("head.php");
     $error = 0;
     if(isset($_GET['error']))
     {
@@ -19,4 +19,4 @@
       } ?>
   </p>
   </form>
-<?php require_once("../footer.php"); ?>
+<?php require_once("footer.php"); ?>

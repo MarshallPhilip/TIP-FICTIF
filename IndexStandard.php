@@ -1,9 +1,9 @@
 <?php
-  require_once("../head.php");
+  require_once("head.php");
   $statut = $_GET['statut'];
 
   if(isset($_POST['saisir'])){
-    header("Location: ../saisie.php?statut=emp");
+    header("Location: saisie.php?statut=emp");
   }
   elseif(isset($_POST['voir'])){
     header("Location: mesAchats.php?statut=emp");
@@ -16,4 +16,4 @@
     <input type="submit" name="saisir" value="Saisir"/>
     <input type="submit" name="voir" value="Mes achats"/>
   </form>
-<?php require_once("../footer.php"); ?>
+<?php require_once("footer.php"); ?>

@@ -1,5 +1,5 @@
 <?php
-  require_once("../head.php");
+  require_once("head.php");
   $statut = $_GET['statut'];
 
   $achats = mesAchats();
@@ -36,4 +36,4 @@
  </table>
  <a href="indexStandard.php?statut=<?php echo $statut;?>">Retour</a>
 </div>
-<?php require_once("../footer.php"); ?>
+<?php require_once("footer.php"); ?>
