@@ -48,24 +48,7 @@
 			return false;
 		}
 	}
-	//Retourne tous les utilisateurs existants dans la BD
-	function extractUsers()
-	{
-		$cnn = getConnexion('tpi-fictif');
-		$users = [];
-		$i = 0;
-		//Permet de savoir plus facilement si login correct ou pas
-		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prenom` FROM `user`');
-		$stmt -> execute();
 
-		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$users[$i][0] = $row->ID;
-			$users[$i][1] = $row->Nom;
-			$users[$i][2] = $row->Prenom;
-			$i++;
-		}
-		return $users;
-	}
 	//Retourne la liste des articles de consommation
 	function Listeconsommation()
 	{
@@ -149,6 +132,55 @@
 		{
 			return false;
 		}
+	}
+
+	//Retourne tous les utilisateurs existants dans la BD
+	function extractUsers()
+	{
+		$cnn = getConnexion('tpi-fictif');
+		$users = [];
+		$i = 0;
+		//Permet de savoir plus facilement si login correct ou pas
+		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prenom` FROM `user`');
+		$stmt -> execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+			$users[$i][0] = $row->ID;
+			$users[$i][1] = $row->Nom;
+			$users[$i][2] = $row->Prenom;
+			$i++;
+		}
+		return $users;
+	}
+	//Extrait les consommation d'un certain user pour en faire une facture
+	function facture($userID)
+	{
+		$cnn = getConnexion('tpi-fictif');
+
+		$i = 0;
+		$achatsUser = [];
+		$sql = 'SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme` INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` ='.$userID;
+		$stmt = $cnn -> prepare($sql);
+		$stmt -> execute();
+		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
+		//Passage en param plus facile
+		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+			$achatsUser[$i][0] = $row->Nom;
+			$achatsUser[$i][1] = $row->DateConsommation;
+			$achatsUser[$i][2] = $row->Nombre;
+			$achatsUser[$i][3] = $row->PrixVendu;
+			$achatsUser[$i][4] = $row->Paye;
+			$i++;
+		}
+		if(!empty($achatsUser))
+		{
+			return $achatsUser;
+		}
+		else
+		{
+			return 'aucune consommation pour cet uilisateur';
+		}
+
 	}
 
 

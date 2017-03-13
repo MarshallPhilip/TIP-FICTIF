@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <meta charset="utf-8">
     <title>TPI-FICTIF</title>
   </head>
@@ -17,7 +17,7 @@
 
     <?php
       if(isset($_SESSION['user'][0]))
-      echo 'Connecté en tant que '.$_SESSION['user'][0]; 
+      echo 'Connecté en tant que '.$_SESSION['user'][0];
     ?>
     <?php
       if(isset($statut)){
