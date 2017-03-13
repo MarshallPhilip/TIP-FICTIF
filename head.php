@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <meta charset="utf-8">
     <title>TPI-FICTIF</title>
   </head>

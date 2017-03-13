@@ -59,6 +59,7 @@
           echo '</td>';
         }
 
+        echo '<td>modifier</td>';
         echo '</tr>';
 
 
