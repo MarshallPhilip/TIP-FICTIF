@@ -105,7 +105,8 @@
 	}
 
 	//Extrait les achats d'une personne
-	function mesAchats(){
+	function mesAchats()
+	{
 		$cnn = getConnexion('tpi-fictif');
 
 		$i = 0;
@@ -134,6 +135,20 @@
 		}
 	}
 
+	//Modifie une consommation
+	function editConsom($choix, $idConsomme, $statut)
+	{
+		$cnn = getConnexion('tpi-fictif');
+
+		$sql = 'UPDATE `consomme` SET `consomme`.`Nombre` = '.$choix.' WHERE `consomme`.`IDConsomme` = '.$idConsomme;
+		$stmt = $cnn -> prepare($sql);
+		$stmt -> execute();
+		echo 'lalala';
+		header("Location: factures.php?statut=$statut");
+
+
+	}
+
 	//Retourne tous les utilisateurs existants dans la BD
 	function extractUsers()
 	{
@@ -159,17 +174,21 @@
 
 		$i = 0;
 		$achatsUser = [];
-		$sql = 'SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme` INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` ='.$userID;
+		$sql = 'SELECT `consomme`.`IDConsomme`, `consommation`.`ID`, `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme`
+		INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = '.$userID.' ORDER BY `consomme`.`IDConsomme` DESC';
+
 		$stmt = $cnn -> prepare($sql);
 		$stmt -> execute();
 		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
 		//Passage en param plus facile
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$achatsUser[$i][0] = $row->Nom;
-			$achatsUser[$i][1] = $row->DateConsommation;
-			$achatsUser[$i][2] = $row->Nombre;
-			$achatsUser[$i][3] = $row->PrixVendu;
-			$achatsUser[$i][4] = $row->Paye;
+			$achatsUser[$i][0] = $row->IDConsomme;
+			$achatsUser[$i][1] = $row->ID;
+			$achatsUser[$i][2] = $row->Nom;
+			$achatsUser[$i][3] = $row->DateConsommation;
+			$achatsUser[$i][4] = $row->Nombre;
+			$achatsUser[$i][5] = $row->PrixVendu;
+			$achatsUser[$i][6] = $row->Paye;
 			$i++;
 		}
 		if(!empty($achatsUser))

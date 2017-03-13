@@ -6,15 +6,16 @@
 
   if(isset($_POST['users']) && $_POST['users'] != "choisir"){
     $facture = facture($_POST['users']);
-    //Je mets facture dans une POST pour la récupérer dans saisieModif
+    //Je mets facture dans une session pour la récupérer dans saisieModif
     $_SESSION['facture'] = $facture;
   }
 
 ?>
 <div class="container">
-  <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>">
+  <form id="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>">
   <div class="form-group">
-    <SELECT name="users">
+    <!-- Plus besoin de valider, ca le fait automatiquement -->
+    <SELECT name="users" onchange="document.getElementById('form').submit();">
       <option class="form-control" value="choisir">Sélectionner utilisateur</option>
       <?php
         //Permet d'afficher la liste des utilisateurs que nous avons extraits dans MySQL.php
@@ -32,7 +33,6 @@
 
         ?>
     </SELECT>
-    <input class="btn btn-primary" type="submit" name="valider" value="Valider"/>
   </div>
   </form>
 </div>
@@ -50,13 +50,15 @@
     {
       foreach ($facture as $key => $value) {
         echo '<tr>';
-        //i correspond à
-        for($i=0; $i<5; $i++){
+        //i correspond à l'ID de la table generee par la requete
+        //Je le commence a 1 pour ne pas afficher l'ID
+        //Le 5 représente le nombre de cellules par ligne
+        for($i=2; $i<6; $i++){
           echo '<td>';
-          if($i == 4 && $value[$i] == 0)
+          if($i == 5 && $value[$i] == 0)
           {
-            echo 'pas payé';
-          }elseif($i == 4 && $value[$i] == 1)
+            echo 'pas facturé';
+          }elseif($i == 5 && $value[$i] == 1)
           {
             echo 'payé';
           }else
@@ -66,7 +68,8 @@
 
           echo '</td>';
         }
-        echo '<td><a class="btn-link" href="saisieModif.php?statut="'.$statut.'">modifier</a></td>';
+        //Key correspond a l'ID dans la table value
+        echo '<td><a class="btn-link" href="saisieModif.php?statut='.$statut.'&idConsomme='.$facture[$key][0].'&idArt='.$facture[$key][1].'&idFacture='.$key.'">modifier</a></td>';
         echo '</tr>';
 
 
