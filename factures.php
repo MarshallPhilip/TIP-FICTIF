@@ -6,6 +6,8 @@
 
   if(isset($_POST['users']) && $_POST['users'] != "choisir"){
     $facture = facture($_POST['users']);
+    //Je mets facture dans une POST pour la récupérer dans saisieModif
+    $_SESSION['facture'] = $facture;
   }
 
 ?>
@@ -48,6 +50,7 @@
     {
       foreach ($facture as $key => $value) {
         echo '<tr>';
+        //i correspond à
         for($i=0; $i<5; $i++){
           echo '<td>';
           if($i == 4 && $value[$i] == 0)
@@ -63,8 +66,7 @@
 
           echo '</td>';
         }
-
-        echo '<td><a class="btn-link">modifier</a></td>';
+        echo '<td><a class="btn-link" href="saisieModif.php?statut="'.$statut.'">modifier</a></td>';
         echo '</tr>';
 
 
