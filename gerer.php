@@ -46,6 +46,7 @@
 
       //Key correspond a l'ID dans la table value
       echo '<td><a class="btn-link" href="modifUser.php?statut='.$statut.'&idUser='.$value->ID.'">modifier</a></td>';
+      echo '<td><a class="btn-link" href="deleteUser.php?statut='.$statut.'&idUser='.$value->ID.'">Supprimer</a></td>';
       echo '</tr>';
 
      }

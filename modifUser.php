@@ -53,9 +53,10 @@
                 $selectedSup = 'selected';
               break;
           }
-          echo '<option value ="'.$value->Statut.'" '.$selectedEmp.'>employé</option>';
-          echo '<option value ="'.$value->Statut.'" '.$selectedCai.'>caissier</option>';
-          echo '<option value ="'.$value->Statut.'" '.$selectedSup.'>superviseur</option>';
+          //On ne peut pas encore modifier le statut, revoir liste options
+          echo '<option value ="emp" '.$selectedEmp.'>employé</option>';
+          echo '<option value ="cai" '.$selectedCai.'>caissier</option>';
+          echo '<option value ="sup" '.$selectedSup.'>superviseur</option>';
           echo '</td>';
           echo '</tr>';
 

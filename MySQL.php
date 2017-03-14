@@ -222,13 +222,31 @@
 		if($stmt)
 		{
 			echo '<script>alert("Modification réussie")</script>';
-			//header("Location: gerer.php?statut=$statut");
+			header("Location: gerer.php?statut=$statut");
 		}else
 		{
 			echo '<script>alert("Modification erronée")</script>';
-			//header("Location: gerer.php?statut=$statut");
+			header("Location: gerer.php?statut=$statut");
 		}
+	}
+	//Supprime un utilisateur
+	function delUser($statut, $idUser)
+	{
+		$cnn = getConnexion('tpi-fictif');
+		$sql = 'DELETE FROM `user` WHERE `user`.`ID` = '.$idUser;
 
+		$stmt = $cnn -> prepare($sql);
+		$stmt -> execute();
+
+		if($stmt)
+		{
+			echo '<script>alert("Suppression réussie")</script>';
+			header("Location: gerer.php?statut=$statut");
+		}else
+		{
+			echo '<script>alert("Suppression impossible")</script>';
+			header("Location: gerer.php?statut=$statut");
+		}
 
 	}
 
