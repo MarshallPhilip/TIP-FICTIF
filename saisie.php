@@ -42,7 +42,7 @@
     <div>
       <fieldset>
          <legend>Liste des consommations</legend>
-         <table class="table">
+         <table class="table table-responsive">
          <?php
          //Affichage de la liste des articles de consommation
           $listeConsom = Listeconsommation();

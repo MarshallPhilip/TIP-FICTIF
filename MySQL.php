@@ -1,4 +1,5 @@
 <?php
+
 /* ici une fonction getConnection() */
 	function getConnexion($dbname)
 	{
@@ -209,12 +210,16 @@
 	}
 
 	//Modifie un utilisateut dans la table user
-	function editUser($id, $nom, $prenom, $badge, $statut)
+	function editUser($id, $nom, $prenom, $badge, $statutUser, $statut)
 	{
 		$cnn = getConnexion('tpi-fictif');
-		echo $statut;
 
-		$sql = "UPDATE `user` SET `Nom` = '$nom', `Prenom` = '$prenom', `badge` = '$badge', `Statut` = '$statut' WHERE `ID` = $id";
+		$sql = "UPDATE `user` SET `Nom` = ':nom', `Prenom` = ':prenom', `badge` = '$badge', `Statut` = ':statutUser' WHERE `ID` = $id";
+
+		$stmt -> bindValue(':nom', $nom, PDO::PARAM_STR);
+		$stmt -> bindValue(':prenom', $prenom, PDO::PARAM_STR);
+		$stmt -> bindValue(':badge', $badge, PDO::PARAM_STR);
+		$stmt -> bindValue(':statutUser', $statutUser, PDO::PARAM_STR);
 
 		$stmt = $cnn -> prepare($sql);
 		$stmt -> execute();
@@ -249,5 +254,24 @@
 		}
 
 	}
+	//Cree un utilisateur
+	function addUser($nom, $prenom, $badge, $statutUser, $statut)
+	{
+		$cnn = getConnexion('tpi-fictif');
+		$sql = "INSERT INTO `user`(`Nom`, `Prenom`, `Badge`, `statut`) VALUES ('$nom', '$prenom', '$badge', '$statutUser')";
 
+		$stmt = $cnn -> prepare($sql);
+		$stmt -> execute();
+
+		if($stmt)
+		{
+			echo '<script>alert("Utilisateur créé")</script>';
+			header("Location: gerer.php?statut=$statut");
+		}else
+		{
+			echo '<script>alert("Impossible de créer cet utilisateur!")</script>';
+			header("Location: gerer.php?statut=$statut");
+		}
+
+	}
 ?>

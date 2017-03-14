@@ -12,6 +12,7 @@
 <!-- Tableau affichant les consommation d'un user pour users -->
 <div class="container">
   <h2>Gérer les utilisateurs</h2>
+  <a class="btn btn-success" href="addUser?statut=<?php echo $statut; ?>">Ajouter un utilisateur</a><br/><br/>
   <table class="table table table-striped">
   <?php
 
@@ -48,7 +49,6 @@
       echo '<td><a class="btn-link" href="modifUser.php?statut='.$statut.'&idUser='.$value->ID.'">modifier</a></td>';
       echo '<td><a class="btn-link" href="deleteUser.php?statut='.$statut.'&idUser='.$value->ID.'">Supprimer</a></td>';
       echo '</tr>';
-
      }
 
    ?>

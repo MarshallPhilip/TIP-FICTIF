@@ -17,9 +17,9 @@
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $badge = $_POST['badge'];
-    $statut = $_POST['statut'];
+    $statutUser = $_POST['statut'];
 
-    editUser($id, $nom, $prenom, $badge, $statut);
+    editUser($id, $nom, $prenom, $badge, $statutUser, $statut);
   }
 
 ?>
@@ -28,15 +28,15 @@
     <input type="hidden" name="valide"/>
 
     <div class="container">
-      <h2>Gérer les utilisateurs</h2>
+      <h2>Modifier un utilisateur</h2>
       <table class="table table table-striped">
       <?php
         foreach ($users as $key => $value) {
           echo '<input type="hidden" name="id" value ="'.$value->ID.'"/>';
           echo '<tr>';
-          echo '<td><input name="nom" value="'.$value->Nom.'"'.'</input></td>';
-          echo '<td><input name="prenom" value="'.$value->Prenom.'"'.'</input></td>';
-          echo '<td><input name="badge" value="'.$value->Badge.'"'.'</input></td>';
+          echo '<td><input name="nom" value="'.$value->Nom.'"></input></td>';
+          echo '<td><input name="prenom" value="'.$value->Prenom.'"></input></td>';
+          echo '<td><input name="badge" value="'.$value->Badge.'"></input></td>';
           echo '<td>';
           echo '<select name="statut">';
           switch ($value->Statut) {
@@ -57,6 +57,7 @@
           echo '<option value ="emp" '.$selectedEmp.'>employé</option>';
           echo '<option value ="cai" '.$selectedCai.'>caissier</option>';
           echo '<option value ="sup" '.$selectedSup.'>superviseur</option>';
+          echo '</select>';
           echo '</td>';
           echo '</tr>';
 
