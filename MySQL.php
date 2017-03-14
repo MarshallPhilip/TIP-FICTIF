@@ -155,13 +155,19 @@
 		$cnn = getConnexion('tpi-fictif');
 		$users = [];
 		$i = 0;
-
-		if($action == 0)
+		//Req 0 si on ne veut que l'ID, nom Prenom
+		//Req 1 si on souhaite tous les champs (gerer users)
+		//Req 2 retourne un utilisateur qu'on veut modifier PS: la valeur de action
+		//correspond a l'ID du user
+		if($action == "list")
 		{
 			$sql = 'SELECT `ID`, `Nom`, `Prenom` FROM `user`';
-		}elseif($action == 1)
+		}elseif($action == "all")
 		{
 			$sql = 'SELECT `ID`, `Nom`, `Prenom`, `Badge`, `Statut` FROM `user`';
+		}else
+		{
+			$sql = 'SELECT `ID`, `Nom`, `Prenom`, `Badge`, `Statut` FROM `user` WHERE `user`.`ID` = '.$action;
 		}
 		//Permet de savoir plus facilement si login correct ou pas
 		$stmt = $cnn -> prepare($sql);
@@ -202,5 +208,28 @@
 
 	}
 
+	//Modifie un utilisateut dans la table user
+	function editUser($id, $nom, $prenom, $badge, $statut)
+	{
+		$cnn = getConnexion('tpi-fictif');
+		echo $statut;
+
+		$sql = "UPDATE `user` SET `Nom` = '$nom', `Prenom` = '$prenom', `badge` = '$badge', `Statut` = '$statut' WHERE `ID` = $id";
+
+		$stmt = $cnn -> prepare($sql);
+		$stmt -> execute();
+
+		if($stmt)
+		{
+			echo '<script>alert("Modification réussie")</script>';
+			//header("Location: gerer.php?statut=$statut");
+		}else
+		{
+			echo '<script>alert("Modification erronée")</script>';
+			//header("Location: gerer.php?statut=$statut");
+		}
+
+
+	}
 
 ?>

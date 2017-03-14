@@ -5,9 +5,8 @@
 
   //Action est envoye a la fnc extract user
   //dans le but de savoir quelle requete executer
-  $action = 1;
+  $action = "all";
   $users = extractUsers($action);
-  var_dump($users);
 ?>
 
 <!-- Tableau affichant les consommation d'un user pour users -->
@@ -46,7 +45,7 @@
       echo '</td>';
 
       //Key correspond a l'ID dans la table value
-      //echo '<td><a class="btn-link" href="saisieModif.php?statut='.$statut.'&idConsomme='.$users[$key]->IDConsomme.'&idArt='.$users[$key]->ID.'&idusers='.$key.'">modifier</a></td>';
+      echo '<td><a class="btn-link" href="modifUser.php?statut='.$statut.'&idUser='.$value->ID.'">modifier</a></td>';
       echo '</tr>';
 
      }

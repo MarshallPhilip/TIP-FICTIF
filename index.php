@@ -10,7 +10,7 @@
 
 
   <form method="POST" action="login.php" id="login">
-    <input type="password" name='badge' placeholder="Badge"/>
+    <input type="password" name='badge' placeholder="Badge" maxlength="4"/>
     <input type="submit" name="valider" value="Valider"/>
     <p>
       <?php if ($error == 1)

@@ -9,7 +9,6 @@
   $facture = $_SESSION['facture']; //Tableau factures vu avant
   $idFacture = $_GET['idFacture']; //Recup ID tableau factures correspondant ligne a modif
 
-  $appel = "";
 
   if(isset($_POST['choix'])){
     $conso = array_filter($_POST, function($v, $k){

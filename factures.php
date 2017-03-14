@@ -5,7 +5,7 @@
 
   //Action est envoye a la fnc extract user
   //dans le but de savoir quelle requete executer
-  $action = 0;
+  $action = "list";
   $users = extractUsers($action);
 
   //Teste si un utilisateur a deja ete selectionne et si oui on genere la facture
@@ -24,14 +24,14 @@
       <option class="form-control" value="choisir">Sélectionner utilisateur</option>
       <?php
         //Permet d'afficher la liste des utilisateurs que nous avons extraits dans MySQL.php
-        foreach ($users as $key => $user) {
+        foreach ($users as $key => $value) {
           //Recursivite
-          if(isset($_POST['users']) && $_POST['users'] == $user[0])
+          if(isset($_POST['users']) && $_POST['users'] == $value->ID)
           {
-            echo '<option value="'.$user[0].'" selected>'.$user[2].' '.$user[1].'</option>';
+            echo '<option value="'.$value->ID.'" selected>'.$value->Nom.' '.$value->Prenom.'</option>';
           }else
           {
-            echo '<option value="'.$user[0].'">'.$user[2].' '.$user[1].'</option>';
+            echo '<option value="'.$value->ID.'">'.$value->Nom.' '.$value->Prenom.'</option>';
           }
 
         }
@@ -70,7 +70,7 @@
 
 
 
-          echo '</td>';
+        echo '</td>';
 
         //Key correspond a l'ID dans la table value
         echo '<td><a class="btn-link" href="saisieModif.php?statut='.$statut.'&idConsomme='.$facture[$key]->IDConsomme.'&idArt='.$facture[$key]->ID.'&idFacture='.$key.'">modifier</a></td>';
