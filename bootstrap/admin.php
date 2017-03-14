@@ -1,26 +1,15 @@
 <?php
   require_once("head.php");
   $statut = $_GET['statut'];
-  $facture = [];
 
-  //Action est envoye a la fnc extract user
-  //dans le but de savoir quelle requete executer
-  $action = 0;
-  $users = extractUsers($action);
 
-  //Teste si un utilisateur a deja ete selectionne et si oui on genere la facture
-  if(isset($_POST['users']) && $_POST['users'] != "choisir"){
-    $facture = facture($_POST['users']);
-    //Je mets facture dans une session pour la récupérer dans saisieModif
-    $_SESSION['facture'] = $facture;
-  }
-
+?>
 ?>
 <div class="container">
   <form id="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>">
   <div class="form-group">
     <!-- Plus besoin de valider, ca le fait automatiquement -->
-    <select name="users" onchange="document.getElementById('form').submit();">
+    <SELECT name="users" onchange="document.getElementById('form').submit();">
       <option class="form-control" value="choisir">Sélectionner utilisateur</option>
       <?php
         //Permet d'afficher la liste des utilisateurs que nous avons extraits dans MySQL.php
@@ -37,7 +26,7 @@
         }
 
         ?>
-    </select>
+    </SELECT>
   </div>
   </form>
 </div>
@@ -55,25 +44,26 @@
     {
       foreach ($facture as $key => $value) {
         echo '<tr>';
-        echo '<td>';
-        echo $value->Nom;
-        echo '</td>';
-        echo '<td>';
-        echo $value->DateConsommation;
-        echo '</td>';
-        echo '<td>';
-        echo $value->Nombre;
-        echo '</td>';
-        echo '<td>';
-        echo $value->PrixVendu;
-        echo '</td>';
-
-
+        //i correspond à l'ID de la table generee par la requete
+        //Je le commence a 1 pour ne pas afficher l'ID
+        //Le 5 représente le nombre de cellules par ligne
+        for($i=2; $i<6; $i++){
+          echo '<td>';
+          if($i == 5 && $value[$i] == 0)
+          {
+            echo 'pas facturé';
+          }elseif($i == 5 && $value[$i] == 1)
+          {
+            echo 'payé';
+          }else
+          {
+            echo $value[$i];
+          }
 
           echo '</td>';
-
+        }
         //Key correspond a l'ID dans la table value
-        echo '<td><a class="btn-link" href="saisieModif.php?statut='.$statut.'&idConsomme='.$facture[$key]->IDConsomme.'&idArt='.$facture[$key]->ID.'&idFacture='.$key.'">modifier</a></td>';
+        echo '<td><a class="btn-link" href="saisieModif.php?statut='.$statut.'&idConsomme='.$facture[$key][0].'&idArt='.$facture[$key][1].'&idFacture='.$key.'">modifier</a></td>';
         echo '</tr>';
 
 

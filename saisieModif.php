@@ -19,13 +19,12 @@
 
 
   }
-
 ?>
 <div class="container">
 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>&&idConsomme=<?php echo $iConsomme;?>&idArt=<?php echo $iArt;?>&idFacture=<?php echo $idFacture;?>">
     <input type="hidden" name="valide"/>
     <h1>Saisir une consommation</h1>
-    <label>Date</label><input type="text" name="date" value="<?php echo $facture[0][3] ?>" readonly="readonly"/><br/>
+    <label>Date</label><input type="text" name="date" value="<?php echo $facture[0]->DateConsommation; ?>" readonly="readonly"/><br/>
     <div>
     <fieldset>
       <table>
@@ -37,7 +36,7 @@
                 //Je teste choix avec article car on l'a extrait avant dans les factures
                 echo '<tr>';
                 if($choix[0] == $iArt ){
-                  echo "<td>".$choix[1].' <input type="number" name="choix" value="'.$facture[$idFacture][4].'" min="0"></td>';
+                  echo "<td>".$choix[1].' <input type="number" name="choix" value="'.$facture[$idFacture]->Nombre.'" min="0"></td>';
                 }
                 echo '</tr>';
               }

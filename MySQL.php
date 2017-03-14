@@ -150,13 +150,21 @@
 	}
 
 	//Retourne tous les utilisateurs existants dans la BD
-	function extractUsers()
+	function extractUsers($action)
 	{
 		$cnn = getConnexion('tpi-fictif');
 		$users = [];
 		$i = 0;
+
+		if($action == 0)
+		{
+			$sql = 'SELECT `ID`, `Nom`, `Prenom` FROM `user`';
+		}elseif($action == 1)
+		{
+			$sql = 'SELECT `ID`, `Nom`, `Prenom`, `Badge`, `Statut` FROM `user`';
+		}
 		//Permet de savoir plus facilement si login correct ou pas
-		$stmt = $cnn -> prepare('SELECT `ID`, `Nom`, `Prenom` FROM `user`');
+		$stmt = $cnn -> prepare($sql);
 		$stmt -> execute();
 
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -182,13 +190,7 @@
 		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
 		//Passage en param plus facile
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$achatsUser[$i][0] = $row->IDConsomme;
-			$achatsUser[$i][1] = $row->ID;
-			$achatsUser[$i][2] = $row->Nom;
-			$achatsUser[$i][3] = $row->DateConsommation;
-			$achatsUser[$i][4] = $row->Nombre;
-			$achatsUser[$i][5] = $row->PrixVendu;
-			$achatsUser[$i][6] = $row->Paye;
+			$achatsUser[$i] = $row;
 			$i++;
 		}
 		if(!empty($achatsUser))
