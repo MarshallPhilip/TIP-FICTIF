@@ -168,9 +168,7 @@
 		$stmt -> execute();
 
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-			$users[$i][0] = $row->ID;
-			$users[$i][1] = $row->Nom;
-			$users[$i][2] = $row->Prenom;
+			$users[$i] = $row;
 			$i++;
 		}
 		return $users;
