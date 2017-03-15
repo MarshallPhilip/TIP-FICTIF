@@ -194,9 +194,10 @@ echo 'ff';
 		$i = 0;
 		$achatsUser = [];
 		$sql = 'SELECT `consomme`.`IDConsomme`, `consommation`.`ID`, `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme`
-		INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = :userID ORDER BY `consomme`.`IDConsomme` DESC';
+		INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = :userID and `consomme`.`Paye` = :non ORDER BY `consomme`.`IDConsomme` DESC';
 		$stmt = $cnn -> prepare($sql);
 		$stmt -> bindValue(':userID', $userID, PDO::PARAM_INT);
+		$stmt -> bindValue(':non', 0, PDO::PARAM_INT);
 
 
 		$stmt -> execute();
@@ -222,26 +223,39 @@ echo 'ff';
 	{
 		$cnn = getConnexion('tpi-fictif');
 
-		$sql = "UPDATE `user` SET `Nom` = :nom, `Prenom` = :prenom, `badge` = :badge, `Statut` = :statutUser WHERE `ID` = :id";
-		$stmt = $cnn -> prepare($sql);
-		$stmt -> bindValue(':nom', $nom, PDO::PARAM_STR);
-		$stmt -> bindValue(':prenom', $prenom, PDO::PARAM_STR);
-		$stmt -> bindValue(':badge', $badge, PDO::PARAM_STR);
-		$stmt -> bindValue(':statutUser', $statutUser, PDO::PARAM_STR);
-		$stmt -> bindValue(':id', $id, PDO::PARAM_INT);
+		$reqBadge = "SELECT * FROM `user` WHERE `user`.`Badge` = :badge";
+		$stmt1 = $cnn -> prepare($reqBadge);
+		$stmt1 -> bindValue(':badge', $badge, PDO::PARAM_STR);
+		$stmt1 -> execute();
 
-
-		$stmt -> execute();
-
-		if($stmt)
+		$row = $stmt1->fetch(PDO::FETCH_OBJ);
+		if(!empty($row))
 		{
-			echo '<script>alert("Modification réussie")</script>';
-			header("Location: gerer.php?statut=$statut");
+			//Si row n'est pas vide, ca veut dire que le num de badge existe deja
+			return 2;
 		}else
 		{
-			echo '<script>alert("Modification erronée")</script>';
-			header("Location: gerer.php?statut=$statut");
+			$sql = "UPDATE `user` SET `Nom` = :nom, `Prenom` = :prenom, `badge` = :badge, `Statut` = :statutUser WHERE `ID` = :id";
+			$stmt2 = $cnn -> prepare($sql);
+			$stmt2 -> bindValue(':nom', $nom, PDO::PARAM_STR);
+			$stmt2 -> bindValue(':prenom', $prenom, PDO::PARAM_STR);
+			$stmt2 -> bindValue(':badge', $badge, PDO::PARAM_STR);
+			$stmt2 -> bindValue(':statutUser', $statutUser, PDO::PARAM_STR);
+			$stmt2 -> bindValue(':id', $id, PDO::PARAM_INT);
+
+
+			$stmt2 -> execute();
+
+			if($stmt2)
+			{
+				return 0;
+			}else
+			{
+				return 1;
+			}
 		}
+
+
 	}
 	//Supprime un utilisateur
 	function delUser($statut, $idUser)
@@ -294,10 +308,10 @@ echo 'ff';
 
 			if($stmt2)
 			{
-				return true;
+				return 0;
 			}else
 			{
-				return false;
+				return 1;
 			}
 		}
 

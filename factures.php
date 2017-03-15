@@ -52,7 +52,7 @@
 </div>
 <!-- Tableau affichant les consommation d'un user pour facture -->
 <div class="container">
-  <h2>Facture de XXX</h2>
+  <h2>Facture en attente</h2>
   <table class="table table table-striped">
   <?php
     //Affichage de la liste des articles de consommation

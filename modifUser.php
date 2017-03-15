@@ -5,22 +5,47 @@
   $selectedEmp = "";
   $selectedCai = "";
   $selectedSup = "";
-  //Recuperation GET
-  $iUser = $_GET['idUser'];
+  $confirm = "";
+  $admin = false;
+  $errorBadge = false;
+  //Recupe ration GET
+  if(isset($_GET['idUser']))
+  {
+    $id = $_GET['idUser'];
+  }elseif(isset($_POST['valide']))
+  {
+    $id = $_POST['id'];
+  }
+
 
   //Dans ce cas, on envoie iUser pour extraire le user que nous voulons voir
-  $users = extractUsers($iUser);
+  $users = extractUsers($id);
 
   if(isset($_POST['valide']))
   {
-    $id = "'".$_POST['id']."'";
-    $nom = "'".$_POST['nom']."'";
-    $prenom = "'".$_POST['prenom']."'";
-    $badge = "'".$_POST['badge']."'";
-    $statutUser = "'".$_POST['statut']."'";
-    
+    $id = $_POST['id'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $badge = $_POST['badge'];
+    $statutUser = $_POST['statut'];
 
-    editUser($id, $nom, $prenom, $badge, $statutUser, $statut);
+
+    $confirm = editUser($id, $nom, $prenom, $badge, $statutUser, $statut);
+
+    if($confirm == 0)
+    {
+
+      echo '<script>alert("Utilisateur modifié")</script>';
+      header("Location: gerer.php?statut=$statut");
+    }elseif($confirm == 1)
+    {
+
+      echo '<script>alert("Impossible de créer cet utilisateur!")</script>';
+      header("Location: gerer.php?statut=$statut");
+    }elseif($confirm == 2)
+    {
+      $errorBadge = true;
+    }
   }
 
 ?>
@@ -35,30 +60,41 @@
         foreach ($users as $key => $value) {
           echo '<input type="hidden" name="id" value ="'.$value->ID.'"/>';
           echo '<tr>';
-          echo '<td><input name="nom" value="'.$value->Nom.'"></input></td>';
-          echo '<td><input name="prenom" value="'.$value->Prenom.'"></input></td>';
-          echo '<td><input name="badge" value="'.$value->Badge.'"></input></td>';
-          echo '<td>';
-          echo '<select name="statut">';
+          echo '<td>Nom : <input name="nom" value="'.$value->Nom.'" minlength="2" maxlength="255"></input></td>';
+          echo '<td>Prénom : <input name="prenom" value="'.$value->Prenom.'" minlength="2" maxlength="255"></input></td>';
+          if($errorBadge){
+            echo '<td>Badge : <input name="badge" value="'.$value->Badge.'" minlength="4" maxlength="4"></input><br/>'
+            .'Ce numéro de badge existe déjà</td>';
+          }else
+          {
+            echo '<td>Badge : <input name="badge" value="'.$value->Badge.'" minlength="4" maxlength="4"></input></td>';
+          }
+          echo '<td>Statut : ';
           switch ($value->Statut) {
             case 'emp':
-              $statutFull = "employé";
               $selectedEmp = 'selected';
               break;
             case 'cai':
-                $statutFull = "caissier";
                 $selectedCai = 'selected';
               break;
             case 'sup':
-                $statutFull = "superviseur";
                 $selectedSup = 'selected';
+                $admin = true;
               break;
           }
-          //On ne peut pas encore modifier le statut, revoir liste options
-          echo '<option value ="emp" '.$selectedEmp.'>employé</option>';
-          echo '<option value ="cai" '.$selectedCai.'>caissier</option>';
-          echo '<option value ="sup" '.$selectedSup.'>superviseur</option>';
-          echo '</select>';
+          if(!empty($admin))
+          {
+            echo 'superviseur';
+          }else
+          {
+            echo '<select name="statut">';
+            echo '<option value ="emp" '.$selectedEmp.'>employé</option>';
+            echo '<option value ="cai" '.$selectedCai.'>caissier</option>';
+            echo '<option value ="sup" '.$selectedSup.'>superviseur</option>';
+            echo '</select>';
+          }
+
+
           echo '</td>';
           echo '</tr>';
 

@@ -45,7 +45,7 @@
         <tr>
         <td>Nom: <input value="<?php if($valide){echo $nom;} ?>" type="text" name="nom" minlength="1"></input></td>
         <td>Prénom: <input value="<?php if($valide){echo $prenom;} ?>" type="text" name="prenom" minlength="1" ></input></td>
-        <td>Badge: <input value="<?php if($valide){echo $badge;} ?>" type="text" name="badge" minlength="4" maxlength="4"></input><br>
+        <td>Badge: <input value="<?php if($valide){echo $badge;} ?>" type="text" name="badge" minlength="4" maxlength="4"></input><br/>
         <?php if($errorBadge){ echo "Ce numéro de badge existe déjà";} ?>
         </td>
         <td>Statut:
