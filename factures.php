@@ -9,8 +9,16 @@
   $users = extractUsers($action);
 
   //Teste si un utilisateur a deja ete selectionne et si oui on genere la facture
-  if(isset($_POST['users']) && $_POST['users'] != "choisir"){
+  if(isset($_POST['users']) && $_POST['users'] != "choisir")
+  {
     $facture = facture($_POST['users']);
+    //Je mets facture dans une session pour la récupérer dans saisieModif
+    $_SESSION['facture'] = $facture;
+  }else
+  {
+    //Session user 1 qui contient l'ID de la personne connectee
+    //Ca permet d'afficher sa facture par defaut
+    $facture = facture($_SESSION['user'][1]);
     //Je mets facture dans une session pour la récupérer dans saisieModif
     $_SESSION['facture'] = $facture;
   }
@@ -26,6 +34,7 @@
         //Permet d'afficher la liste des utilisateurs que nous avons extraits dans MySQL.php
         foreach ($users as $key => $value) {
           //Recursivite
+          //La value contient l'ID de l'utilisateur dans la table user
           if(isset($_POST['users']) && $_POST['users'] == $value->ID)
           {
             echo '<option value="'.$value->ID.'" selected>'.$value->Nom.' '.$value->Prenom.'</option>';

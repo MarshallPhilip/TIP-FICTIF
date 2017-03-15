@@ -5,9 +5,9 @@
   $achats = mesAchats();
 ?>
 
-<div>
-  <h1>Mes achats</h1>
-  <table class="table-condensed">
+<div class="container">
+  <h2>Mes achats</h2>
+  <table class="table table table-striped">
   <?php
     //Affichage de la liste des articles de consommation
     foreach ($achats as $key => $value) {

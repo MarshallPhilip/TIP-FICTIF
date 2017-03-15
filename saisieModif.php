@@ -22,8 +22,8 @@
 <div class="container">
 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>&&idConsomme=<?php echo $iConsomme;?>&idArt=<?php echo $iArt;?>&idFacture=<?php echo $idFacture;?>">
     <input type="hidden" name="valide"/>
-    <h1>Saisir une consommation</h1>
-    <label>Date</label><input type="text" name="date" value="<?php echo $facture[0]->DateConsommation; ?>" readonly="readonly"/><br/>
+    <h1>Modifier une consommation</h1>
+    <label>Date de consommation : </label><?php echo $facture[0]->DateConsommation; ?><br/>
     <div>
     <fieldset>
       <table>

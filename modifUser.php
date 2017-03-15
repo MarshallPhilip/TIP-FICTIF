@@ -13,11 +13,12 @@
 
   if(isset($_POST['valide']))
   {
-    $id = $_POST['id'];
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $badge = $_POST['badge'];
-    $statutUser = $_POST['statut'];
+    $id = "'".$_POST['id']."'";
+    $nom = "'".$_POST['nom']."'";
+    $prenom = "'".$_POST['prenom']."'";
+    $badge = "'".$_POST['badge']."'";
+    $statutUser = "'".$_POST['statut']."'";
+    
 
     editUser($id, $nom, $prenom, $badge, $statutUser, $statut);
   }

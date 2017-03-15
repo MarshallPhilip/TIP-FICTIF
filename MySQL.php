@@ -53,7 +53,6 @@
 	//Retourne la liste des articles de consommation
 	function Listeconsommation()
 	{
-
 		$cnn = getConnexion('tpi-fictif');
 		$i = 0;
 		//Permet de savoir plus facilement si login correct ou pas
@@ -77,8 +76,8 @@
 			return false;
 		}
 	}
-
-	function Saisieconsommation($saisie)
+	//CHECKER BIND PARAM
+	function Saisieconsommation($saisie, $retour)
 	{
 		$cnn = getConnexion('tpi-fictif');
 		//Préparation requête
@@ -103,6 +102,8 @@
 		$req = $debutSQL.$values.";";
 		$stmt = $cnn -> prepare($req);
 		$stmt -> execute();
+echo 'ff';
+		header("Location : $retour");
 	}
 
 	//Extrait les achats d'une personne
@@ -113,8 +114,9 @@
 		$i = 0;
 		//Permet de savoir plus facilement si login correct ou pas
 		$mesAchats = [];
-		$sql = 'SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme` INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` ='.$_SESSION['user'][1];
+		$sql = 'SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme` INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = :ID';
 		$stmt = $cnn -> prepare($sql);
+		$stmt -> bindValue(':ID', $_SESSION['user'][1], PDO::PARAM_INT);
 		$stmt -> execute();
 		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
 		//Passage en param plus facile
@@ -141,10 +143,11 @@
 	{
 		$cnn = getConnexion('tpi-fictif');
 
-		$sql = 'UPDATE `consomme` SET `consomme`.`Nombre` = '.$choix.' WHERE `consomme`.`IDConsomme` = '.$idConsomme;
+		$sql = 'UPDATE `consomme` SET `consomme`.`Nombre` = :choix WHERE `consomme`.`IDConsomme` = :idConsomme';
 		$stmt = $cnn -> prepare($sql);
+		$stmt -> bindValue(':choix', $choix, PDO::PARAM_INT);
+		$stmt -> bindValue(':idConsomme', $idConsomme, PDO::PARAM_INT);
 		$stmt -> execute();
-		echo 'lalala';
 		header("Location: factures.php?statut=$statut");
 
 
@@ -163,15 +166,18 @@
 		if($action == "list")
 		{
 			$sql = 'SELECT `ID`, `Nom`, `Prenom` FROM `user`';
+			$stmt = $cnn -> prepare($sql);
 		}elseif($action == "all")
 		{
 			$sql = 'SELECT `ID`, `Nom`, `Prenom`, `Badge`, `Statut` FROM `user`';
+			$stmt = $cnn -> prepare($sql);
 		}else
 		{
-			$sql = 'SELECT `ID`, `Nom`, `Prenom`, `Badge`, `Statut` FROM `user` WHERE `user`.`ID` = '.$action;
+			$sql = 'SELECT `ID`, `Nom`, `Prenom`, `Badge`, `Statut` FROM `user` WHERE `user`.`ID` = :action';
+			$stmt = $cnn -> prepare($sql);
+			$stmt -> bindValue(':action', $action, PDO::PARAM_INT);
 		}
-		//Permet de savoir plus facilement si login correct ou pas
-		$stmt = $cnn -> prepare($sql);
+
 		$stmt -> execute();
 
 		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -188,9 +194,11 @@
 		$i = 0;
 		$achatsUser = [];
 		$sql = 'SELECT `consomme`.`IDConsomme`, `consommation`.`ID`, `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme`
-		INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = '.$userID.' ORDER BY `consomme`.`IDConsomme` DESC';
-
+		INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = :userID ORDER BY `consomme`.`IDConsomme` DESC';
 		$stmt = $cnn -> prepare($sql);
+		$stmt -> bindValue(':userID', $userID, PDO::PARAM_INT);
+
+
 		$stmt -> execute();
 		//Remplissange tab 2 dimensions pour avoir les infos qu'on souhaite
 		//Passage en param plus facile
@@ -214,14 +222,15 @@
 	{
 		$cnn = getConnexion('tpi-fictif');
 
-		$sql = "UPDATE `user` SET `Nom` = ':nom', `Prenom` = ':prenom', `badge` = '$badge', `Statut` = ':statutUser' WHERE `ID` = $id";
-
+		$sql = "UPDATE `user` SET `Nom` = :nom, `Prenom` = :prenom, `badge` = :badge, `Statut` = :statutUser WHERE `ID` = :id";
+		$stmt = $cnn -> prepare($sql);
 		$stmt -> bindValue(':nom', $nom, PDO::PARAM_STR);
 		$stmt -> bindValue(':prenom', $prenom, PDO::PARAM_STR);
 		$stmt -> bindValue(':badge', $badge, PDO::PARAM_STR);
 		$stmt -> bindValue(':statutUser', $statutUser, PDO::PARAM_STR);
+		$stmt -> bindValue(':id', $id, PDO::PARAM_INT);
 
-		$stmt = $cnn -> prepare($sql);
+
 		$stmt -> execute();
 
 		if($stmt)
@@ -238,9 +247,11 @@
 	function delUser($statut, $idUser)
 	{
 		$cnn = getConnexion('tpi-fictif');
-		$sql = 'DELETE FROM `user` WHERE `user`.`ID` = '.$idUser;
 
+		$sql = 'DELETE FROM `user` WHERE `user`.`ID` = :idUser';
 		$stmt = $cnn -> prepare($sql);
+		$stmt -> bindValue(':idUser', $idUser, PDO::PARAM_INT);
+
 		$stmt -> execute();
 
 		if($stmt)
@@ -258,19 +269,36 @@
 	function addUser($nom, $prenom, $badge, $statutUser, $statut)
 	{
 		$cnn = getConnexion('tpi-fictif');
-		$sql = "INSERT INTO `user`(`Nom`, `Prenom`, `Badge`, `statut`) VALUES ('$nom', '$prenom', '$badge', '$statutUser')";
 
-		$stmt = $cnn -> prepare($sql);
-		$stmt -> execute();
+		$reqBadge = "SELECT * FROM `user` WHERE `user`.`Badge` = :badge";
+		$stmt1 = $cnn -> prepare($reqBadge);
+		$stmt1 -> bindValue(':badge', $badge, PDO::PARAM_STR);
+		$stmt1 -> execute();
 
-		if($stmt)
+		$row = $stmt1->fetch(PDO::FETCH_OBJ);
+		if(!empty($row))
 		{
-			echo '<script>alert("Utilisateur créé")</script>';
-			header("Location: gerer.php?statut=$statut");
-		}else
+			//Si row n'est pas vide, ca veut dire que le num de badge existe deja
+			return 2;
+		}
+		else
 		{
-			echo '<script>alert("Impossible de créer cet utilisateur!")</script>';
-			header("Location: gerer.php?statut=$statut");
+			$sql = "INSERT INTO `user`(`Nom`, `Prenom`, `Badge`, `statut`) VALUES (:nom, :prenom, :badge, :statutUser)";
+			$stmt2 = $cnn -> prepare($sql);
+			$stmt2 -> bindValue(':nom', $nom, PDO::PARAM_STR);
+			$stmt2 -> bindValue(':prenom', $prenom, PDO::PARAM_STR);
+			$stmt2 -> bindValue(':badge', $badge, PDO::PARAM_STR);
+			$stmt2 -> bindValue(':statutUser', $statutUser, PDO::PARAM_STR);
+
+			$stmt2 -> execute();
+
+			if($stmt2)
+			{
+				return true;
+			}else
+			{
+				return false;
+			}
 		}
 
 	}

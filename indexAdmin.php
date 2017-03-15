@@ -12,7 +12,7 @@
 ?>
 <div class="container">
   <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?statut=<?php echo $statut;?>">
-    <input class="btn" type="hidden" name="valide"/>
+    <input type="hidden" name="valide"/>
     <input class="btn" type="submit" name="saisir" value="Saisir"/>
     <input class="btn" type="submit" name="factures" value="Factures"/>
     <?php if ($statut == "sup")
