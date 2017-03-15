@@ -22,6 +22,7 @@
 
       // DEBUT
       //On filtre: je souhaite n'avoir que les ID d'articles, donc du numérique
+      
       $conso = array_filter($_POST, function($v, $k){
         return !empty($v) && is_numeric($v);
       }, ARRAY_FILTER_USE_BOTH);
