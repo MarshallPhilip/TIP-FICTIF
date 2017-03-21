@@ -1,3 +1,3 @@
   </body>
-  <footer>Projet TPI fictif</footer>
+  <footer class="footer">Projet TPI fictif</footer>
 </html>

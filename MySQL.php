@@ -114,7 +114,7 @@ echo 'ff';
 		$i = 0;
 		//Permet de savoir plus facilement si login correct ou pas
 		$mesAchats = [];
-		$sql = 'SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme` INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = :ID';
+		$sql = 'SELECT `consommation`.`Nom`, `consomme`.`DateConsommation`, `consomme`.`Nombre`, `consomme`.`PrixVendu`, `consomme`.`Paye` FROM `consomme` INNER JOIN `consommation` ON `consomme`.`Consommation_ID` = `consommation`.`ID` and `consomme`.`User_ID` = :ID  ORDER BY `consomme`.`IDConsomme` DESC';
 		$stmt = $cnn -> prepare($sql);
 		$stmt -> bindValue(':ID', $_SESSION['user'][1], PDO::PARAM_INT);
 		$stmt -> execute();

@@ -6755,3 +6755,14 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+/* MON CODE */
+.center_div{
+    margin: auto;
+    width:80% /* value of your choice which suits your alignment */
+}
+.footer {
+  margin-top:35%;
+  height: 10px;
+  margin-bottom:0%;
+  text-align:center;
+}

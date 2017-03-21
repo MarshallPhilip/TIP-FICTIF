@@ -7,16 +7,22 @@
     }
 ?>
 
+<div class="container center">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>Se connecter</h2>
 
-
-  <form method="POST" action="login.php" id="login">
-    <input type="password" name='badge' placeholder="Badge" maxlength="4"/>
-    <input type="submit" name="valider" value="Valider"/>
-    <p>
-      <?php if ($error == 1)
-      {
-      echo "Numéro de badge erroné";
-      } ?>
-  </p>
-  </form>
+            <form method="POST" action="login.php" id="login">
+              <input class="form-control" type="password" name='badge' placeholder="Badge" maxlength="4"/><br/>
+              <input class="btn" type="submit" name="valider" value="Valider"/>
+              <p>
+                <?php if ($error == 1)
+                {
+                echo "Numéro de badge erroné";
+                } ?>
+            </p>
+            </form>
+          </div>
+      </div>
+</div>
 <?php require_once("footer.php"); ?>
