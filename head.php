@@ -13,21 +13,6 @@
 
     <meta charset="utf-8">
     <title>TPI-FICTIF</title>
-
-
-
-
-    <script>
-      $( function() {
-        $( "#cell" ).sortable({
-          connectWith: ".connectedSortable"
-        }).disableSelection();
-      } );
-    </script>
-
-
-
-
   </head>
   <header>
 

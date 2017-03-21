@@ -1,8 +1,14 @@
 <?php
   require_once("head.php");
-  if(!isset($_SESSION['user'][0]))
+  //Verifie si un utilisateur est bien connecte et si il a le droit
+  //d'acceder a cette page
+  if(!isset($_SESSION['user'][0]) || (isset($_SESSION['user'][0]) && ($_SESSION['user'][2] != "sup" || $_SESSION['user'][2] != "sup")))
   {
-    header("Location: index.php?error=0");
+    if(isset($_SESSION['user'][0]))
+    {
+      session_destroy();
+    }
+    header("Location: index.php");
   }else
   {
     $statut = $_GET['statut'];

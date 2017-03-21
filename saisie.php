@@ -1,5 +1,7 @@
 <?php
   require_once("head.php");
+  //Verifie si un utilisateur est bien connecte et si il a le droit
+  //d'acceder a cette page
   if(!isset($_SESSION['user'][0]))
   {
     header("Location: index.php?error=0");
@@ -22,7 +24,7 @@
 
       // DEBUT
       //On filtre: je souhaite n'avoir que les ID d'articles, donc du numérique
-      
+
       $conso = array_filter($_POST, function($v, $k){
         return !empty($v) && is_numeric($v);
       }, ARRAY_FILTER_USE_BOTH);

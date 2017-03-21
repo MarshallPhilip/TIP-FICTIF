@@ -12,6 +12,7 @@
 	if($connexion != false){
 		$_SESSION['user'][0] = $connexion['Prenom']." ".$connexion['Nom'];
 		$_SESSION['user'][1] = $connexion['ID'];
+		$_SESSION['user'][2] = $connexion['Statut'];
 		$statut = $connexion['Statut'];
 
 		if($statut == "emp")

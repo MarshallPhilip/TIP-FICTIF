@@ -7,7 +7,7 @@
     }
 ?>
 
-<div class="container center">
+<div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <h2>Se connecter</h2>
